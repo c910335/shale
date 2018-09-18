@@ -1,0 +1,5 @@
+require "../spec_helper"
+require "granite"
+require "./config"
+require "../../src/granite"
+require "../models/*"

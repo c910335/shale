@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    image: shale
+    command: bash -c "sleep 10 && shards build ameba && bin/ameba && crystal tool format --check && crystal spec"
+    environment:
+      DATABASE_URL: postgres://admin:password@db:5432/shale
+    links:
+      - db
+    volumes:
+      - .:/app
+
+  migrate:
+    build: .
+    image: shale
+    command: bash -c 'while ! nc -q 1 db 5432 </dev/null; do sleep 1; done && amber db migrate seed'
+    environment:
+      DATABASE_URL: postgres://admin:password@db:5432/shale
+    links:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shale
+    volumes:
+      - db:/var/lib/postgres/data
+
+volumes:
+  db:

@@ -1,0 +1,7 @@
+Lint/PercentArrays:
+  Description: Disallows some unwanted symbols in percent array literals
+  StringArrayUnwantedSymbols: ',"'
+  SymbolArrayUnwantedSymbols: ',:'
+  Enabled: true
+  Excluded:
+  - spec/granite/granite_spec.cr
