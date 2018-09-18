@@ -9,6 +9,7 @@ describe Shale::Granite::Query::PGAssembler do
   it "selects with limit and offset" do
     tests = Test.page(3).per(3).select
 
+    tests.size.should eq(3)
     tests.each_with_index do |test, i|
       test.num.should eq(3 - i)
     end

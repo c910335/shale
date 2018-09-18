@@ -7,4 +7,5 @@ install:
   - docker-compose build
 
 script:
-  - docker-compose run migrate && docker-compose run spec
+  - docker-compose run migrate
+  - docker-compose run spec
