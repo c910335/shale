@@ -1,9 +1,9 @@
 FROM amberframework/amber:v0.9.0
 
-WORKDIR /app
+WORKDIR /spec
 
-COPY . /app
+COPY . /spec
 
-RUN shards build ameba
+RUN shards
 
 CMD amber db migrate seed && bin/ameba && crystal tool format --check && crystal spec
