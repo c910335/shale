@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe Shale::Granite::Query::PGAssembler do
+describe Granite::Base do
   it "builds limit and offset" do
     Test.page(10).per(8).raw_sql.chomp.split
       .should eq %w(SELECT id, num, created_at, updated_at FROM tests ORDER BY id DESC LIMIT 8 OFFSET 72)
