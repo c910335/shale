@@ -1,6 +1,6 @@
 # Shale
 
-A paginator for [Amber Framework](https://github.com/amberframework/amber)
+Paginator for [Amber Framework](https://github.com/amberframework/amber)
 
 ## Installation
 
@@ -9,7 +9,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   shale:
-    github: your-github-user/shale
+    github: c910335/shale
 ```
 
 ## Usage
