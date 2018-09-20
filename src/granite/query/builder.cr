@@ -1,6 +1,6 @@
 class Granite::Query::Builder(Model)
-  getter page = 1_i64
-  getter per_page = 8_i64
+  getter page : Int64?
+  getter per_page : Int64?
 
   def assembler
     Shale::Granite::Query::PGAssembler(Model).new self

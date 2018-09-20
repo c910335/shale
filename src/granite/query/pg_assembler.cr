@@ -6,7 +6,11 @@ class Shale::Granite::Query::PGAssembler(Model) < Granite::Query::Assembler::Pos
   end
 
   def build_limit_offset
-    "LIMIT #{@query.per_page} OFFSET #{@query.per_page * (@query.page - 1)}"
+    if @query.page && @query.per_page
+      "LIMIT #{@query.per_page} OFFSET #{@query.per_page.not_nil! * (@query.page.not_nil! - 1)}"
+    else
+      ""
+    end
   end
 
   def count : ::Granite::Query::Executor::Value(Model, Int64)
@@ -14,8 +18,8 @@ class Shale::Granite::Query::PGAssembler(Model) < Granite::Query::Assembler::Pos
       SELECT COUNT(*)
       FROM #{table_name}
       #{build_where}
-      #{build_group}
-      #{build_order}
+      #{build_group_by}
+      #{build_order false}
       #{build_limit_offset}
     SQL
 
