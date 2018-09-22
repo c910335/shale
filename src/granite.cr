@@ -1,4 +1,5 @@
 require "granite"
+require "./shale/base_adapter"
 require "./granite/**"
 
 class Granite::Base
