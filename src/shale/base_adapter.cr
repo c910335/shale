@@ -1,8 +1,8 @@
 abstract class Shale::BaseAdapter
   getter page = 1_i64
   getter per = 8_i64
-  getter order = :id
-  getter direction = :desc
+  getter order : String | Symbol = :id
+  getter direction : String | Symbol = :desc
   getter headers : HTTP::Headers?
 
   def page(num)
