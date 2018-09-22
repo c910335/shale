@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 class TestController
-  include Shale::Paginator(Shale::Granite::Adapter)
+  include Shale::Granite::Paginator
 
   def tests
     paginate Test do |p|
@@ -22,7 +22,7 @@ class TestController
 end
 
 class ScopedTestController
-  include Shale::Paginator(Shale::Granite::Adapter)
+  include Shale::Granite::Paginator
   shale_base_url "https://scoped.base.url"
   shale_path "/other_tests"
 

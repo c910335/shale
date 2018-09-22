@@ -1,7 +1,4 @@
 module Shale::Paginator(Adapter)
-  @@shale_base_url : String?
-  @@shale_path : String?
-
   def paginate(model)
     adapter = Adapter.new
     yield adapter
@@ -44,11 +41,21 @@ module Shale::Paginator(Adapter)
     @@shale_path || Shale.path
   end
 
-  macro included
-    def self.shale_base_url(@@shale_base_url : String)
-    end
+  macro __included
+    {% if @type < Object %}
+      def self.shale_base_url(@@shale_base_url : String)
+      end
 
-    def self.shale_path(@@shale_path : String)
-    end
+      def self.shale_path(@@shale_path : String)
+      end
+    {% else %}
+      macro included
+        __included
+      end
+    {% end %}
+  end
+
+  macro included
+    __included
   end
 end
