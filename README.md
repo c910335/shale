@@ -17,9 +17,11 @@ dependencies:
 Note: Shale only supports Granite and PostgreSQL currently.
 
 ```crystal
-# config/application.cr
-require "shale/granite" # for granite adapter
+
+# config/initializers/paginator.cr
 require "shale/amber" # for page helper
+require "shale/granite" # for granite adapter
+Shale.base_url = "https://base.url"
 
 # src/controllers/application_controller.cr
 class ApplicationController < Amber::Controller::Base
@@ -28,6 +30,8 @@ end
 
 # src/controller/sample_controller
 class SampleController < ApplicationController
+  shale_path "/tests"
+
   def index
     samples = paginate Sample
     # render your view with samples
