@@ -4,6 +4,7 @@ abstract class Shale::BaseAdapter
   getter order : String | Symbol = :id
   getter direction : String | Symbol = :desc
   getter headers : HTTP::Headers?
+  getter path : String?
 
   def page(num)
     @page = num.to_i64
@@ -20,6 +21,9 @@ abstract class Shale::BaseAdapter
   end
 
   def headers(@headers)
+  end
+
+  def path(@path)
   end
 
   abstract def count(model)
