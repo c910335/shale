@@ -5,9 +5,9 @@ class Shale::Granite::Adapter < Shale::BaseAdapter
 
   def select(model)
     model
-      .page(@page)
-      .per(@per)
-      .order({@order => @direction})
+      .page(page)
+      .per(per)
+      .order({order => direction})
       .select
   end
 end

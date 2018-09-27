@@ -2,7 +2,7 @@ module Shale::Paginator(Adapter)
   property! shale_adapter : Adapter
 
   def paginate(model)
-    @shale_adapter = Adapter.new
+    @shale_adapter = Adapter.new shale_bundle
     yield shale_adapter
 
     count = shale_adapter.count model
@@ -15,10 +15,10 @@ module Shale::Paginator(Adapter)
     last_page += 1 unless count % shale_adapter.per == 0
 
     links = [] of String
-    links << "<#{shale_full_url}?#{shale_page_params(shale_adapter.page - 1)}>; rel=\"prev\"" if shale_adapter.page > 1
-    links << "<#{shale_full_url}?#{shale_page_params(shale_adapter.page + 1)}>; rel=\"next\"" if shale_adapter.page < last_page
-    links << "<#{shale_full_url}?#{shale_page_params(1)}>; rel=\"first\""
-    links << "<#{shale_full_url}?#{shale_page_params(last_page)}>; rel=\"last\""
+    links << "<#{shale_adapter.full_url}?#{shale_page_params(shale_adapter.page - 1)}>; rel=\"prev\"" if shale_adapter.page > 1
+    links << "<#{shale_adapter.full_url}?#{shale_page_params(shale_adapter.page + 1)}>; rel=\"next\"" if shale_adapter.page < last_page
+    links << "<#{shale_adapter.full_url}?#{shale_page_params(1)}>; rel=\"first\""
+    links << "<#{shale_adapter.full_url}?#{shale_page_params(last_page)}>; rel=\"last\""
     links
   end
 
@@ -31,24 +31,26 @@ module Shale::Paginator(Adapter)
     end
   end
 
-  def shale_full_url
-    shale_base_url + shale_path
-  end
-
-  def shale_base_url
-    @@shale_base_url || Shale.base_url
-  end
-
-  def shale_path
-    shale_adapter.path || @@shale_path || Shale.path
-  end
-
   macro __included
     {% if @type < Object %}
-      def self.shale_base_url(@@shale_base_url : String)
-      end
+      class_getter! shale_page : Int32
+      class_getter! shale_per : Int32
+      class_getter! shale_order : String | Symbol
+      class_getter! shale_direction : String | Symbol
+      class_getter! shale_base_url : String
+      class_getter! shale_path : String
 
-      def self.shale_path(@@shale_path : String)
+      {% for prop in %i(page per order direction base_url path) %}
+        def self.shale_{{prop.id}}(@@shale_{{prop.id}})
+        end
+      {% end %}
+
+      def shale_bundle
+        Shale::Bundle.new(
+          {% for prop in %i(page per order direction base_url path) %}
+            {{prop.id}}: @@shale_{{prop.id}},
+          {% end %}
+        )
       end
     {% else %}
       macro included

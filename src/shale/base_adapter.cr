@@ -1,29 +1,31 @@
 abstract class Shale::BaseAdapter
-  getter page = 1_i64
-  getter per = 8_i64
-  getter order : String | Symbol = :id
-  getter direction : String | Symbol = :desc
   getter headers : HTTP::Headers?
-  getter path : String?
 
-  def page(num)
-    @page = num.to_i64
+  @bundle : Bundle
+  @page : Int32?
+  @per : Int32?
+  @order : String | Symbol | Nil
+  @direction : String | Symbol | Nil
+  @base_url : String?
+  @path : String?
+
+  def initialize(@bundle)
   end
 
-  def per(num)
-    @per = num.to_i64
-  end
+  {% for prop in %i(page per order direction base_url path) %}
+    def {{prop.id}}(@{{prop.id}})
+    end
 
-  def order(@order)
-  end
-
-  def direction(@direction)
-  end
+    def {{prop.id}}
+      @{{prop.id}} || @bundle.{{prop.id}} || Shale.{{prop.id}}
+    end
+  {% end %}
 
   def headers(@headers)
   end
 
-  def path(@path)
+  def full_url
+    base_url + path
   end
 
   abstract def count(model)

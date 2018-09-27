@@ -18,8 +18,16 @@ class Granite::Query::Builder(Model)
     self
   end
 
-  def order(fields : Hash(Symbol | String, Symbol | String))
-    fields.each do |field, direction|
+  def where(matches : Hash(Symbol | String, Symbol | String))
+    matches.each do |field, data|
+      @where_fields[field.to_s] = data
+    end
+
+    self
+  end
+
+  def order(dsl : Hash(Symbol | String, Symbol | String))
+    dsl.each do |field, direction|
       direction = if direction == "desc" || direction == :desc
                     Sort::Descending
                   else

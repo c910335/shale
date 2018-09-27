@@ -5,7 +5,5 @@ module Shale::Granite::Query::BuilderMethods
     ::Granite::Query::Builder(self).new
   end
 
-  def page(num)
-    __builder.page(num)
-  end
+  delegate page, per, where, order, to: __builder
 end
