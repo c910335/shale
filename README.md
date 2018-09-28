@@ -1,5 +1,9 @@
 # Shale
 
+[![Build Status](https://travis-ci.com/c910335/shale.svg?branch=master)](https://travis-ci.com/c910335/shale)
+[![GitHub releases](https://img.shields.io/github/release/c910335/shale.svg)](https://github.com/c910335/shale/releases)
+[![GitHub license](https://img.shields.io/github/license/c910335/shale.svg)](https://github.com/c910335/shale/blob/master/LICENSE)
+
 Paginator for [Amber Framework](https://github.com/amberframework/amber)
 
 ## Installation
