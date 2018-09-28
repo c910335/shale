@@ -1,10 +1,10 @@
 name: shale
-version: 0.1.1
+version: 0.1.2
 
 authors:
   - Tatsiujin Chin <c910335@gmail.com>
 
-crystal: 0.26.0
+crystal: 0.26.1
 
 license: MIT
 
