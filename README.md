@@ -79,7 +79,7 @@ class SomeController
   include Shale::Amber::PageHelper(Shale::Granite::Adapter)
 
   shale_base_url = "https://base.url"
-  Shale_path = "/path"
+  shale_path = "/path"
   shale_page = 1
   shale_per = 8
   shale_order = :id
