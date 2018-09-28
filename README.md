@@ -18,7 +18,7 @@ dependencies:
 
 ## Usage
 
-Note: Shale only supports Granite and PostgreSQL currently.
+Note: Shale only supports [Granite](https://github.com/amberframework/granite) and PostgreSQL currently.
 
 ```crystal
 
