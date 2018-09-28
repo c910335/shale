@@ -94,6 +94,8 @@ end
 This is what `Shale::Amber::PageHelper` looks like.
 
 ```crystal
+require "shale"
+
 module Shale::Amber::PageHelper(Adapter)
   include Shale::Paginator(Adapter)
 
@@ -120,6 +122,8 @@ You can change the source of path or parameters by building your own paginator.
 For example, this is an `ArrayAdapter`.
 
 ```crystal
+require "shale"
+
 class ArrayAdapter < Shale::BaseAdapter
   def count(array)
     array.size
