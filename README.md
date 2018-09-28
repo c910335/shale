@@ -59,6 +59,100 @@ Link: <https://base.url/samples?page=2&per_page=3&sort=id&direction=desc>; rel="
   <https://base.url/samples?page=8&per_page=3&sort=id&direction=desc>; rel="last"
 ```
 
+### Default Values
+
+```crystal
+# Global
+Shale.base_url = "https://base.url" # required
+Shale.path = "/path"
+Shale.page = 1
+Shale.per = 8
+Shale.order = :id
+Shale.direction = :desc
+
+# Scoped
+class SomeController
+  include Shale::Amber::PageHelper(Shale::Granite::Adapter)
+
+  shale_base_url = "https://base.url"
+  Shale_path = "/path"
+  shale_page = 1
+  shale_per = 8
+  shale_order = :id
+  shale_direction = :desc
+end
+```
+
+## Customization
+
+### Paginator
+
+This is what `Shale::Amber::PageHelper` looks like.
+
+```crystal
+module Shale::Amber::PageHelper(Adapter)
+  include Shale::Paginator(Adapter)
+
+  def paginate(model)
+    paginate model do |p|
+      p.path request.path
+      p.page params["page"].to_i if params["page"]?
+      p.per params["per_page"].to_i if params["per_page"]?
+      p.order params["sort"] if params["sort"]?
+      p.direction params["direction"] if params["direction"]?
+      p.headers response.headers
+    end
+  end
+end
+```
+
+You can change the source of path or parameters by building your own paginator.
+
+### Adapter
+
+- inherits `Shale::BaseAdapter`
+- implements `#count(model)` and `#select(model)` with `#page`, `#per`, `#order` and `#direction`
+
+For example, this is an `ArrayAdapter`.
+
+```crystal
+class ArrayAdapter < Shale::BaseAdapter
+  def count(array)
+    array.size
+  end
+
+  def select(array)
+    sorted = if direction.to_s == "desc"
+               array.sort { |a, b| b[order] <=> a[order] }
+             else
+               array.sort { |a, b| a[order] <=> b[order] }
+             end
+    sorted[(page - 1) * per, per]
+  end
+end
+```
+
+Which is useful to paginate `Array(Hash(Symbol, Int32))`.
+
+```crystal
+class ArrayPaginator
+  include Shale::Paginator(ArrayAdapter)
+end
+
+array = Array.new(10) do |i|
+  {:number => 10 - i}
+end
+
+paginated = ArrayPaginator.new.paginate array do |p|
+  p.page 2
+  p.per 3
+  p.order :number
+  p.direction :asc
+end
+
+pp paginated # => [{:number => 4}, {:number => 5}, {:number => 6}]
+```
+
 ## Development
 
 Since Shale depends on PostgreSQL, we run specs with Docker.
