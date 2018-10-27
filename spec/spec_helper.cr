@@ -1,6 +1,4 @@
 require "spec"
-require "granite"
-require "./granite/config"
 require "../src/granite"
-require "./models/*"
 require "../src/shale"
+require "./support/*"
