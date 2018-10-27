@@ -1,6 +1,5 @@
 require "granite"
-require "../spec/granite/config"
-require "../spec/models/*"
+require "../spec/support/*"
 
 unless Test.first
   10.times do |num|
