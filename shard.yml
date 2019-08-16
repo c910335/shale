@@ -4,13 +4,9 @@ version: 0.2.0
 authors:
   - Tatsiujin Chin <c910335@gmail.com>
 
-crystal: 0.26.1
+crystal: 0.30.1
 
 license: MIT
-
-targets:
-  ameba:
-    main: lib/ameba/src/cli.cr
 
 development_dependencies:
   granite:
@@ -19,8 +15,8 @@ development_dependencies:
 
   pg:
     github: will/crystal-pg
-    version: ~> 0.15.0
+    version: ~> 0.18.1
 
   ameba:
     github: veelenga/ameba
-    version: ~> 0.8.0
+    version: ~> 0.10.0

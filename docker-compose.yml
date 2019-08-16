@@ -4,7 +4,7 @@ services:
   spec:
     build: .
     image: shale
-    command: bash -c "sleep 10 && shards build ameba && bin/ameba && crystal tool format --check && crystal spec"
+    command: bash -c "sleep 10 && bin/ameba && crystal tool format --check && crystal spec"
     environment:
       DATABASE_URL: postgres://admin:password@db:5432/shale
     links:
