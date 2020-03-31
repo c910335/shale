@@ -11,7 +11,7 @@ module Shale::Paginator(Adapter)
   end
 
   def shale_header_links(count)
-    last_page = count / shale_adapter.per
+    last_page = count // shale_adapter.per
     last_page += 1 unless count % shale_adapter.per == 0
 
     links = [] of String
