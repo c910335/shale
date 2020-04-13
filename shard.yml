@@ -4,7 +4,7 @@ version: 0.2.3
 authors:
   - Tatsiujin Chin <c910335@gmail.com>
 
-crystal: 0.33.0
+crystal: 0.34.0
 
 license: MIT
 
@@ -15,7 +15,7 @@ development_dependencies:
 
   pg:
     github: will/crystal-pg
-    version: ~> 0.20.0
+    version: ~> 0.21.0
 
   ameba:
     github: veelenga/ameba
