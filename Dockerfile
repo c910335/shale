@@ -1,4 +1,4 @@
-FROM amberframework/amber:latest
+FROM amberframework/amber:0.35.0
 
 WORKDIR /spec
 
